@@ -1,0 +1,26 @@
+services:
+  lab:
+    build:
+      context: .
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+    image: code-lab:debian
+    container_name: code-lab
+    hostname: code-lab
+    tty: true
+    stdin_open: true
+    init: true
+    ports:
+      # Solo loopback del host (127.0.0.1), NUNCA 0.0.0.0
+      - "127.0.0.1:8081:8081"
+    volumes:
+      - ./workspace:/home/dev/workspace
+      # Persistir plugins/estado de NvChad entre rebuilds
+      - nvim-data:/home/dev/.local/share/nvim
+      - nvim-state:/home/dev/.local/state/nvim
+    restart: unless-stopped
+
+volumes:
+  nvim-data:
+  nvim-state:

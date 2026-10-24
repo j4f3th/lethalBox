@@ -12,11 +12,10 @@ services:
     stdin_open: true
     init: true
     ports:
-      # Solo loopback del host (127.0.0.1), NUNCA 0.0.0.0
+      # Port forwarding to loopback 127.0.0.1
       - "127.0.0.1:8081:8081"
     volumes:
       - ./workspace:/home/dev/workspace
-      # Persistir plugins/estado de NvChad entre rebuilds
       - nvim-data:/home/dev/.local/share/nvim
       - nvim-state:/home/dev/.local/state/nvim
     restart: unless-stopped

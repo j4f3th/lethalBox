@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+
+# force to tell what's wrong if the script fails and goes to the path where the script lives
+
+
 set -euo pipefail
 cd "$(dirname "$(readlink -f "$0")")"
 
@@ -9,6 +13,7 @@ redColour="\e[0;31m\033[1m"
 yellowColour="\e[0;33m\033[1m"
 grayColour="\e[0;37m\033[1m"
 
+# create log file
 log=$(mktemp)
 
 function ctrl_c(){
@@ -18,13 +23,20 @@ function ctrl_c(){
     exit 1
 }
 
+# take ctrl + c 
 trap ctrl_c INT
 
+
+# take sudo password
 sudo -v
 
+
+# hide cursor
 tput civis
 
 echo -e "\n${yellowColour}[+]${endColour}${grayColour} Cleaning...${endColour}\n"
+
+
 
 if (
     cd docker
